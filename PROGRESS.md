@@ -31,5 +31,5 @@ Stack: React 19 + Vite, React Router 7, Express 5, Mongoose 9, Multer 2, MongoDB
 - NOT yet tested against a real MongoDB (none available in the build sandbox).
 
 - Client `vite build` passes. README.md and DEPLOY.md written.
-- Final ZIP: pawhome.zip (excludes node_modules and dist).
+- Final ZIP: pawhome.zip. Compose joins external edge network (EDGE_NETWORK) for Cloudflare tunnel; containers pawhome-web, pawhome-api.
 - Still untested: full run against real MongoDB and docker build (no Docker/Mongo in sandbox).

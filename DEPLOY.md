@@ -37,20 +37,24 @@ git push -u origin main
 | `ADMIN_EMAIL` | your admin login email |
 | `ADMIN_PASSWORD` | your admin password |
 | `MONGO_USER` | optional, default `pawhome` |
-| `APP_PORT` | optional, default `8080` |
+| `EDGE_NETWORK` | name of the shared Docker network your Cloudflare tunnel uses (default `edge`) |
 
 8. Click **Deploy the stack**. The first build takes a few minutes.
-9. Open `http://<server-ip>:<APP_PORT>` and log in with the admin email and password.
+9. In Cloudflare: Networking > Tunnels > your tunnel > Routes > Add route > Published application
+   - Hostname: `pawhome` + domain `imsanthosh.tech`
+   - Service URL: `http://pawhome-web:80`
+10. Open https://pawhome.imsanthosh.tech and log in with the admin email and password.
 
 ## 3. Update later
 Push to GitHub, then in Portainer open the stack > **Pull and redeploy** (turn on "Re-pull image / re-build" if shown). Data in the volumes is kept.
 
 ## Troubleshooting
 - **Stack fails: "Set MONGO_PASSWORD"**: a required variable is missing in step 7.
-- **Port already in use**: change `APP_PORT`.
+- **Network edge not found**: the external network name in Portainer > Networks differs; set `EDGE_NETWORK` to that name.
+- **Cloudflare error 502**: the tunnel container is not on the same network as `pawhome-web`, or the Service URL is wrong.
 - **API cannot connect to MongoDB**: check `MONGO_PASSWORD` has no special characters, then redeploy. If you changed the password after the first start, delete the `mongo_data` volume (this erases the database) or keep the old password.
 - **Logs**: Portainer > Containers > `pawhome-server-1` > Logs.
-- **Check the API**: `http://<server-ip>:<APP_PORT>/api/health` should show `{"status":"ok"}`.
+- **Check the API**: `https://pawhome.imsanthosh.tech/api/health` should show `{"status":"ok"}`.
 
 ## Test flow after deploying
 1. Register a shelter account > log in as admin > Admin page > approve it.
