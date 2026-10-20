@@ -33,3 +33,21 @@ Stack: React 19 + Vite, React Router 7, Express 5, Mongoose 9, Multer 2, MongoDB
 - Client `vite build` passes. README.md and DEPLOY.md written.
 - Final ZIP: pawhome.zip. Compose joins external edge network (EDGE_NETWORK) for Cloudflare tunnel; containers pawhome-web, pawhome-api.
 - Still untested: full run against real MongoDB and docker build (no Docker/Mongo in sandbox).
+
+## Phase 4: Auth redirect fix + UI refresh (update ZIP: pawhome-ui-update.zip)
+Palette: ink #264653, teal #2A9D8F, sun #E9C46A, peach #F4A261, coral #E76F51, cream #FFF9F2. Fonts: Fredoka (headings) + Nunito (body).
+Rule: GuestRoute is the ONLY place that redirects a logged-in user away from /login and /register (target: location.state.from or "/"). Login/Register pages do not navigate themselves.
+- [x] client/index.html (fonts, theme color)
+- [x] client/src/index.css (full restyle, responsive)
+- [x] utils/petMeta.js, components: PawIcon, Footer, GuestRoute, PasswordInput, EmptyState
+- [x] components restyled: Navbar (mobile menu), PetCard, Alert, Spinner
+- [x] App.jsx (GuestRoute on /login and /register, Footer)
+- [x] pages: Home (hero, stats, filters, how it works), PetDetail, Login, Register
+- [x] pages: MyApplications, ShelterDashboard, PetForm, AdminDashboard, Forbidden, NotFound
+- [x] vite build passes
+- [x] pawhome-ui-update.zip created (updated files only)
+
+Phase 4 notes:
+- Updated-files ZIP (pawhome-ui-update.zip) keeps project-relative paths: unzip over the project folder, commit, push, then Portainer > Pull and redeploy (client image is rebuilt from the repo).
+- No server changes in Phase 4. ProtectedRoute.jsx, hooks, context, utils/api.js unchanged.
+- Build verified with `npm run build` in client. Browser behaviour not tested in a real browser (sandbox).
